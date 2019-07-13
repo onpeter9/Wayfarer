@@ -2,7 +2,11 @@ import '@babel/polyfill';
 import morgan from 'morgan';
 import express from 'express';
 import bodyparser from 'body-parser';
-import port from './config/index';
+import config from './config';
+import user from './routers/user';
+import auth from './utility/auth';
+
+const { port } = config;
 
 const app = express();
 
@@ -10,23 +14,32 @@ app.use(morgan('dev'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
-// Route to the wayfarer home
+console.log(auth.hash('userpasswordhash: ', 'Godmode1'));
+
+// Home page route
 app.get('/api/v1', (req, res) => {
   res.status(200).json({
     status: 200,
     data: {
-      message: 'Wayfarer Index',
+      message: 'Welcome to Wayfarer',
     },
   });
 });
 
 
-// this is meant to handle non-existent routes with a proper message
+app.disable('x-powered-by');
+
+/**
+ * API routes
+ */
+app.use('/api/v1', user);
+
+// Handle non-existent route with with a proper message
 app.all('*', (req, res) => {
   console.log(req.url, ' is not valid');
   res.status(404).json({
     status: 404,
-    error: 'Invalid request. Unable to locate route',
+    error: 'Not Found. Route doesnt exist',
   });
 });
 

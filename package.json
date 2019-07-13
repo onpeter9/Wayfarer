@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "set DEBUG=dev && cross-env NODE_ENV=development babel-watch ./app/index.js",
-    "dev": "nodemon --exec babel-node ./app/index.js",
+    "dev": "cross-env NODE_ENV=dev npm run migrate && cross-env NODE_ENV=dev nodemon --exec babel-node ./app/index.js",
     "build": "rmdir /S /Q ./build && babel ./app --out-dir ./build",
-    "test": "export NODE_ENV=test || set NODE_ENV=test && nyc --require @babel/register  mocha ./api/test --timeout 20000 --exit"
+    "test": "cross-env NODE_ENV=test npm run migrate && cross-env NODE_ENV=test nyc --reporter=text mocha --timeout 10000 -c ./app/test --require @babel/register --exit",
+    "migrate": "node ./app/models/migration migration && node ./app/models/seed seed"
   },
   "keywords": [],
   "author": "Peter ebuzome",
