@@ -9,4 +9,9 @@ const router = express.Router();
  */
 router.post('/auth/signup', Users.signUp);
 
+/**
+ * User can signin
+ */
+router.post('/auth/signin', Users.signIn);
+
 module.exports = router;
