@@ -1,6 +1,7 @@
-import dotenv from 'dotenv';
+import config from './config';
 
-dotenv.config();
-const port = process.env.PORT;
-
-module.exports = port;
+module.exports = {
+  port: config.port,
+  dbUrl: config.dbUrl,
+  jwtKey: config.jwtKey,
+};
