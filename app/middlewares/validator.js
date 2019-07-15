@@ -73,7 +73,6 @@ Example 1: "orlando@gmail.com"`,
           () => 'Please Input your password!',
         ),
     });
-
     return joi.validate(user, schema, { abortEarly: true });
   },
   tripValidator(trip) {
