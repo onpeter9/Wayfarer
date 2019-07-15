@@ -1,7 +1,7 @@
 import chai from 'chai';
 import assert from 'assert';
 import request from 'supertest';
-import app from '../';
+import app from '..';
 
 const { expect } = chai;
 const should = chai.should();
@@ -17,13 +17,13 @@ describe('Home route', () => {
         const { body } = res;
         body.should.be.an('object');
         body.should.haveOwnProperty('status');
-        body.status.should.equal(200);
+        body.status.should.be.a('string');
+        body.status.should.equal('success');
         body.should.haveOwnProperty('data');
         const { data } = body;
         data.should.be.an('object');
         data.should.haveOwnProperty('message');
         data.message.should.equal('Welcome to Wayfarer');
- 
         done();
       })
       .catch(err => done(err));
@@ -38,7 +38,6 @@ describe('Home route error', () => {
         res.status.should.equal(404);
         res.body.should.haveOwnProperty('error');
         res.body.error.should.equal('Not Found. Route doesnt exist');
-
         done();
       })
       .catch(err => done(err));
