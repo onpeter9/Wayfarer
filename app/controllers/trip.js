@@ -46,13 +46,35 @@ class Trips {
       }
       const createTrip = await Trips.tripModel().insert(columns, values, clause);
       const data = { ...createTrip[0] };
-     
+
       return res.status(201).json({
         status: 'success',
         data,
       });
     } catch (err) {
       console.error(err);
+      return res.status(500).json({
+        status: 'error',
+        error: 'Internal server error',
+      });
+    }
+  }
+
+  static async getAllTrips(req, res) {
+    try {
+      const data = await Trips.tripModel().select('*');
+      if (!data[0]) {
+        return res.status(404).json({
+          status: 'error',
+          error: 'There is no available trip',
+        });
+      }
+
+      return res.status(200).json({
+        status: 'success',
+        data,
+      });
+    } catch (error) {
       return res.status(500).json({
         status: 'error',
         error: 'Internal server error',
