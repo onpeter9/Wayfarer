@@ -56,12 +56,12 @@ const migration = async () => {
     `;
 
     await pool.query(dropTables);
-    // console.log('Tables dropped successfully!');
+    console.log('Tables dropped successfully!');
 
     await pool.query(createTables);
-    // console.log('Tables created successfully!');
+    console.log('Tables created successfully!');
   } catch (error) {
-    // console.error(error.message);
+    console.error(error.message);
   }
 };
 

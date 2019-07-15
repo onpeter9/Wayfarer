@@ -19,7 +19,7 @@ class Model {
     this.pool = pool;
     this.pool.on('error', (err) => {
       console.log('Unexpected error on idle client', err);
-      process.exit(0);
+      process.exit(-1);
     });
   }
 
