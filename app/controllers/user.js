@@ -86,16 +86,12 @@ class Users {
       const {
         id, email, first_name, last_name, is_admin, created_on,
       } = data[0];
-      const payload = {
+      const token = Auth.generateToken({
         id,
         email,
-        first_name,
-        last_name,
         is_admin,
-        created_on,
-      };
-      const token = Auth.generateToken({ ...payload });
-      res.setHeader('Authorization', `Bearer ${token}`);
+      });
+
       return res.status(200).json({
         status: 'success',
         data: {

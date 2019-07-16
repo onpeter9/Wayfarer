@@ -32,7 +32,7 @@ app.disable('x-powered-by');
  */
 app.use('/api/v1', routers.user);
 app.use('/api/v1', routers.trip);
-
+app.use('/api/v1', routers.booking);
 
 // Handle non-existent route with with a proper message
 app.all('*', (req, res) => {

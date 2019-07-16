@@ -3,8 +3,6 @@ import config from '../config';
 
 const { dbUrl } = config;
 
-console.log(dbUrl);
-
 const pool = new Pool({
   connectionString: dbUrl,
 });

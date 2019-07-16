@@ -38,7 +38,7 @@ module.exports = {
         .regex(/^(?=.*\d)(?=.*[a-zA-Z])(?!.*[\W_\x7B-\xFF]).{6,25}$/)
         .required()
         .error(
-          () => `Your Password must be between 6-25 characters long lowercase alphabets or including at least 1 uppercase, and 1 digit Eg: People12`,
+          () => 'Your Password must be between 6-25 characters long lowercase alphabets or including at least 1 uppercase, and 1 digit Eg: People12',
         ),
       confirmPassword: joi
         .any()
@@ -50,7 +50,7 @@ module.exports = {
     return joi.validate(user, schema);
   },
 
-/**
+  /**
    * @description Validates all fields in signup request body
    * @param {user} object
    */
@@ -113,6 +113,35 @@ Example 1: "orlando@gmail.com"`,
           .error(() => 'Please enter a valid admin token'),
       });
 
+    return joi.validate(trip, schema, { abortEarly: false });
+  },
+  bookTripValidator(trip) {
+    const schema = joi.object().keys({
+      trip_id: joi
+        .string()
+        .trim()
+        .required()
+        .guid({ version: 'uuidv4' })
+        .error(() => 'Please enter a valid trip id. The trip_id format shoud be "uuid version 4"'),
+      seat_number: joi
+        .number()
+        .integer()
+        .required()
+        .error(
+          () => 'Please enter the  seat number',
+        ),
+      token: joi
+        .jwt()
+        .valid({ secret: config.jwtKey })
+        .required()
+        .error(() => 'Please enter a valid admin token'),
+      user_id: joi
+        .string()
+        .trim()
+        .required()
+        .guid({ version: 'uuidv4' })
+        .error(() => 'Please enter a valid user id. The user_id format shoud be "uuid version 4"'),
+    });
     return joi.validate(trip, schema, { abortEarly: false });
   },
 };
